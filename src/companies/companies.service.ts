@@ -3,13 +3,13 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Company } from '../database/models/company.model';
-// import { Owner } from '../database/models/owner.model';
+import { Owner } from '../database/models/owner.model';
 
 @Injectable()
 export class CompaniesService {
   constructor(
     @InjectModel(Company) private readonly modelCompany: typeof Company,
-    // @InjectModel(Owner) private readonly modelOwner: typeof Owner,
+    @InjectModel(Owner) private readonly modelOwner: typeof Owner,
   ) {}
 
   create(createCompanyDto: CreateCompanyDto) {
@@ -19,7 +19,7 @@ export class CompaniesService {
 
   findAll() {
     const companies = this.modelCompany.findAll({
-      // include: Owner,
+      include: Owner,
     });
     return companies;
   }
