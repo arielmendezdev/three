@@ -1,7 +1,7 @@
 import { UUIDTypes } from "uuid";
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
-// import { Owner } from "./owner.model";
-// import { Employed } from "./employed.model";
+import { Owner } from "./owner.model";
+import { Employed } from "./employed.model";
 
 @Table({ tableName: 'companies', timestamps: true }) 
 export class Company extends Model<Company> {
@@ -30,10 +30,10 @@ export class Company extends Model<Company> {
   })
   isDeleted: boolean
   
-  // @HasMany(() => Owner)
-  // owners!: Owner
+  @HasMany(() => Owner)
+  owners!: Owner
 
-  // @HasMany(() => Employed)
-  // employees!: Employed
+  @HasMany(() => Employed)
+  employees!: Employed
 
 }

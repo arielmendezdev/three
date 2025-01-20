@@ -8,6 +8,8 @@ import { AddressesModule } from './addresses/addresses.module';
 import { Address } from './database/models/address.model';
 import { CompaniesModule } from './companies/companies.module';
 import { Company } from './database/models/company.model';
+import { EmployeesModule } from './employees/employees.module';
+import { Employed } from './database/models/employed.model';
 import { OwnersModule } from './owners/owners.module';
 import { Owner } from './database/models/owner.model';
 import { User } from './database/models/user.model';
@@ -34,13 +36,15 @@ import { UsersModule } from './users/users.module';
           rejectUnauthorized: false, // Si es un certificado auto-firmado
         },
       },
-      models: [User, Address, Company, Owner],
+      models: [User, Address, Company, Owner, Employed],
     }),
-    SequelizeModule.forFeature([User, Address, Company, Owner]),
+    SequelizeModule.forFeature([User, Address, Company, Owner, Employed]),
     UsersModule,
     AddressesModule,
     CompaniesModule,
     OwnersModule,
+    EmployeesModule,
+    
 
   ],
   exports: [SequelizeModule],
