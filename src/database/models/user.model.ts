@@ -1,5 +1,8 @@
 import { UUIDTypes } from "uuid";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from "sequelize-typescript";
+// import { Tent } from "./tent.model";
+// import { Umbrella } from "./umbrella.model";
+import { Address } from "./address.model";
 
 @Table({ tableName: 'users', timestamps: true }) 
 export class User extends Model<User> {
@@ -55,5 +58,26 @@ export class User extends Model<User> {
     type: DataType.STRING,
   })
   userName: string
+  
+  // @ForeignKey(() => Tent)
+  // @Column({
+  //   type: DataType.UUID,
+  // })
+  // tentId!: UUIDTypes
+
+  // @ForeignKey(() => Umbrella)
+  // @Column({
+  //   type: DataType.UUID,
+  // })
+  // umbrellaId!: UUIDTypes
+
+  // @BelongsTo(() => Tent)
+  // tent!: Tent
+
+  // @BelongsTo(() => Umbrella)
+  // umbrella!: Umbrella
+
+  @HasOne(() => Address)
+  address!: Address
 
 }

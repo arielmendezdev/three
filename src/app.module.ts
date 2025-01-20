@@ -5,6 +5,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import pg from 'pg';
 import { AddressesModule } from './addresses/addresses.module';
 import { Address } from './database/models/address.model';
+import { CompaniesModule } from './companies/companies.module';
+import { Company } from './database/models/company.model';
 import { User } from './database/models/user.model';
 import { UsersModule } from './users/users.module';
 
@@ -28,11 +30,12 @@ import { UsersModule } from './users/users.module';
           rejectUnauthorized: false, // Si es un certificado auto-firmado
         },
       },
-      models: [User, Address],
+      models: [User, Address, Company],
     }),
-    SequelizeModule.forFeature([User, Address]),
+    SequelizeModule.forFeature([User, Address, Company]),
     UsersModule,
     AddressesModule,
+    CompaniesModule,
   ],
   exports: [SequelizeModule],
   controllers: [AppController],
