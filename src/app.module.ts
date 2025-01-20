@@ -3,12 +3,16 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import pg from 'pg';
+
 import { AddressesModule } from './addresses/addresses.module';
 import { Address } from './database/models/address.model';
 import { CompaniesModule } from './companies/companies.module';
 import { Company } from './database/models/company.model';
+import { OwnersModule } from './owners/owners.module';
+import { Owner } from './database/models/owner.model';
 import { User } from './database/models/user.model';
 import { UsersModule } from './users/users.module';
+
 
 @Module({
   imports: [
@@ -30,12 +34,14 @@ import { UsersModule } from './users/users.module';
           rejectUnauthorized: false, // Si es un certificado auto-firmado
         },
       },
-      models: [User, Address, Company],
+      models: [User, Address, Company, Owner],
     }),
-    SequelizeModule.forFeature([User, Address, Company]),
+    SequelizeModule.forFeature([User, Address, Company, Owner]),
     UsersModule,
     AddressesModule,
     CompaniesModule,
+    OwnersModule,
+
   ],
   exports: [SequelizeModule],
   controllers: [AppController],
