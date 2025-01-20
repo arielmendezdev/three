@@ -12,6 +12,8 @@ import { EmployeesModule } from './employees/employees.module';
 import { Employed } from './database/models/employed.model';
 import { OwnersModule } from './owners/owners.module';
 import { Owner } from './database/models/owner.model';
+import { TentsModule } from './tents/tents.module';
+import { Tent } from './database/models/tent.model';
 import { User } from './database/models/user.model';
 import { UsersModule } from './users/users.module';
 
@@ -36,15 +38,15 @@ import { UsersModule } from './users/users.module';
           rejectUnauthorized: false, // Si es un certificado auto-firmado
         },
       },
-      models: [User, Address, Company, Owner, Employed],
+      models: [User, Address, Company, Owner, Employed, Tent],
     }),
-    SequelizeModule.forFeature([User, Address, Company, Owner, Employed]),
+    SequelizeModule.forFeature([User, Address, Company, Owner, Employed, Tent]),
     UsersModule,
     AddressesModule,
     CompaniesModule,
     OwnersModule,
     EmployeesModule,
-    
+    TentsModule,
 
   ],
   exports: [SequelizeModule],
