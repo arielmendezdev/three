@@ -43,7 +43,6 @@ export class UsersService {
 
   async remove(id: string) {
     const user = await this.modelUser.findByPk(id);
-    // console.log(user.dataValues.tentId)
 
     user.set({ isDeleted: true });
     user.save();
