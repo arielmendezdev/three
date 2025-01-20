@@ -14,6 +14,8 @@ import { OwnersModule } from './owners/owners.module';
 import { Owner } from './database/models/owner.model';
 import { TentsModule } from './tents/tents.module';
 import { Tent } from './database/models/tent.model';
+import { UmbrellasModule } from './umbrellas/umbrellas.module';
+import { Umbrella } from './database/models/umbrella.model';
 import { User } from './database/models/user.model';
 import { UsersModule } from './users/users.module';
 
@@ -38,16 +40,16 @@ import { UsersModule } from './users/users.module';
           rejectUnauthorized: false, // Si es un certificado auto-firmado
         },
       },
-      models: [User, Address, Company, Owner, Employed, Tent],
+      models: [User, Address, Company, Owner, Employed, Tent, Umbrella],
     }),
-    SequelizeModule.forFeature([User, Address, Company, Owner, Employed, Tent]),
+    SequelizeModule.forFeature([User, Address, Company, Owner, Employed, Tent, Umbrella]),
     UsersModule,
     AddressesModule,
     CompaniesModule,
     OwnersModule,
     EmployeesModule,
     TentsModule,
-
+    UmbrellasModule
   ],
   exports: [SequelizeModule],
   controllers: [AppController],

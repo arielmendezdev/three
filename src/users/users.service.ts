@@ -7,7 +7,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '../database/models/user.model';
 import { Address } from '../database/models/address.model';
 import { Tent } from '../database/models/tent.model';
-// import { Umbrella } from '../database/models/umbrella.model';
+import { Umbrella } from '../database/models/umbrella.model';
 
 @Injectable()
 export class UsersService {
@@ -15,7 +15,7 @@ export class UsersService {
     @InjectModel(User) private readonly modelUser: typeof User,
     @InjectModel(Address) private readonly modelAddress: typeof Address,
     @InjectModel(Tent) private readonly modelTent: typeof Tent,
-    // @InjectModel(Umbrella) private readonly modelUmbrella: typeof Umbrella,
+    @InjectModel(Umbrella) private readonly modelUmbrella: typeof Umbrella,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -42,7 +42,7 @@ export class UsersService {
 
   async findAll() {
     const users = await this.modelUser.findAll({
-      include: [Address, Tent],
+      include: [Address, Tent, Umbrella],
       where: { isDeleted: true },
     });
     return users;
