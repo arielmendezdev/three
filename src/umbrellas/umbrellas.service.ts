@@ -13,7 +13,10 @@ export class UmbrellasService {
   ) {}
 
   create(createUmbrellaDto: CreateUmbrellaDto) {
-    return 'This action adds a new umbrella';
+
+    const newUmbrella = this.modelUmbrella.create(createUmbrellaDto);
+
+    return newUmbrella
   }
 
   findAll() {
