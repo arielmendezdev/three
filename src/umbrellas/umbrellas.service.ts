@@ -12,29 +12,42 @@ export class UmbrellasService {
     @InjectModel(User) private readonly modelUser: typeof User,
   ) {}
 
-  create(createUmbrellaDto: CreateUmbrellaDto) {
+  async create(createUmbrellaDto: CreateUmbrellaDto) {
 
-    const newUmbrella = this.modelUmbrella.create(createUmbrellaDto);
+    const newUmbrella = await this.modelUmbrella.create(createUmbrellaDto);
 
     return newUmbrella
   }
 
-  findAll() {
-    const umbrellas = this.modelUmbrella.findAll({
+  async findAll() {
+    const umbrellas = await this.modelUmbrella.findAll({
       include: User,
     });
     return umbrellas;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} umbrella`;
+  async findOne(id: string) {
+    const umbrella = await this.modelUmbrella.findByPk(id);
+    return umbrella
   }
 
-  update(id: number, updateUmbrellaDto: UpdateUmbrellaDto) {
-    return `This action updates a #${id} umbrella`;
+  async update(id: string, updateUmbrellaDto: UpdateUmbrellaDto) {
+    const updateUmbrella = await this.modelUmbrella.findByPk(id);
+    if (updateUmbrella) {
+      updateUmbrella.set(updateUmbrellaDto);
+      updateUmbrella.save();
+      return updateUmbrella;
+    }
+    return `La sombrilla no existe`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} umbrella`;
+  async remove(id: string) {
+    const umbrella = await this.modelUmbrella.findByPk(id);
+    if (umbrella) {
+      umbrella.set({ isDeleted: true });
+      umbrella.save();
+      return umbrella;
+    }
+    return `La sombrilla no existe`;
   }
 }

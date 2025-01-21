@@ -19,16 +19,16 @@ export class UmbrellasController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.umbrellasService.findOne(+id);
+    return this.umbrellasService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUmbrellaDto: UpdateUmbrellaDto) {
-    return this.umbrellasService.update(+id, updateUmbrellaDto);
+    return this.umbrellasService.update(id, updateUmbrellaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.umbrellasService.remove(+id);
+    return this.umbrellasService.remove(id);
   }
 }

@@ -70,7 +70,10 @@ export class UsersService {
         where: { id: updateUser.tentId },
       });
       if (tent.isAvailable) {
-        updateUser.set(updateUserDto);
+        updateUser.set({
+          ...updateUserDto,
+          isAvailable: false
+        });
         await updateUser.save();
         return updateUser;
       } else {
