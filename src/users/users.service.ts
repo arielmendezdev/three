@@ -69,7 +69,7 @@ export class UsersService {
       const tent = await this.modelTent.findOne({
         where: { id: updateUser.tentId },
       });
-      if (!tent) {
+      if (tent.isAvailable) {
         updateUser.set(updateUserDto);
         await updateUser.save();
         return updateUser;
