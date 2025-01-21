@@ -19,7 +19,6 @@ import { Umbrella } from './database/models/umbrella.model';
 import { User } from './database/models/user.model';
 import { UsersModule } from './users/users.module';
 
-
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -29,15 +28,11 @@ import { UsersModule } from './users/users.module';
       database: process.env.PGDATABASE || process.env.DB_DATABASE,
       password: process.env.PGPASSWORD || process.env.DB_PASSWORD,
       port: parseInt(process.env.DB_PORT),
-      // username: process.env.PGUSER,
-      // password: process.env.PGPASSWORD,
-      // database: process.env.PGDATABASE,
-      // host: process.env.PGHOST,
       dialectModule: pg,
       dialectOptions: {
         ssl: {
-          require: true, // Requiere SSL
-          rejectUnauthorized: false, // Si es un certificado auto-firmado
+          require: true,
+          rejectUnauthorized: false,
         },
       },
       models: [User, Address, Company, Owner, Employed, Tent, Umbrella],
