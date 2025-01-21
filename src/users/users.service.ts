@@ -19,13 +19,11 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    // console.log(createUserDto)
-
     if (createUserDto.tentId) {
       const tent = await this.modelTent.findByPk(createUserDto.tentId);
       if (tent.dataValues.isAvailable) {
         tent.set({
-          ...tent.dataValues,
+          ...tent,
           isAvailable: false,
         });
         tent.save();
@@ -42,13 +40,17 @@ export class UsersService {
 
   async findAll() {
     const users = await this.modelUser.findAll({
-      include: [Address, Tent, Umbrella]
+      include: [Address, Tent, Umbrella],
+      where: { isDeleted: false },
     });
     return users;
   }
 
   async findOne(id: string) {
-    const user = await this.modelUser.findByPk(id);
+    const user = await this.modelUser.findOne({
+      where: { id, isDeleted: false },
+      include: [Address, Tent, Umbrella],
+    });
     if (user) return user;
     return 'user not Found';
   }
@@ -57,48 +59,44 @@ export class UsersService {
     const updateUser = await this.modelUser.findByPk(id);
 
     if (!updateUserDto.tentId) {
-      updateUser.set({
-        ...updateUserDto,
-        tentId: null,
-      });
-      await updateUser.save();
-      return updateUser;
-    }
-
-    if (updateUser.tentId) {
-      const tent = await this.modelTent.findOne({
-        where: { id: updateUser.tentId },
-      });
-      if (tent.dataValues.isAvailable) {
-        tent.dataValues.set({
-          ...tent.dataValues,
-          isAvailable: true,
-        })
-        updateUser.set(updateUserDto);
-        await updateUser.save();
-        return updateUser;
-      } else {
-        return 'La carpa ya esta ocupada';
-      }
-    } else {
       updateUser.set(updateUserDto);
       await updateUser.save();
-      const tent = await this.modelTent.findOne({
-        where: { id: updateUser.tentId },
-      });
-      if (tent.isAvailable) {
+      return updateUser;
+    } else {
+      if (updateUser.tentId) {
+        const tent = await this.modelTent.findOne({
+          where: { id: updateUserDto.tentId },
+        });
+        if (tent.dataValues.isAvailable) {
+          tent.set({
+            ...tent,
+            isAvailable: false,
+          });
+          await tent.save();
+          const tentChanged = await this.modelTent.findOne({
+            where: { id: updateUser.tentId }
+          });
+          tentChanged.set({
+            ...tentChanged,
+            isAvailable: true,
+          });
+          updateUser.set(updateUserDto);
+          await updateUser.save();
+          tentChanged.save();
+          return updateUser;
+        } else {
+          return 'La carpa ya esta ocupada';
+        }
+      } else {
         updateUser.set(updateUserDto);
         await updateUser.save();
         return updateUser;
-      } else {
-        return 'La carpa ya esta ocupada';
       }
     }
   }
 
   async remove(id: string) {
     const user = await this.modelUser.findByPk(id);
-    // console.log(user.dataValues.tentId)
 
     if (user.dataValues.tentId) {
       console.log(user.dataValues.tentId);

@@ -19,7 +19,15 @@ export class TentsService {
 
   async findAll() {
     const tents = await this.modelTent.findAll({
-      include: User,
+      include: [
+        {
+          model: User,
+          where: {
+            isDeleted: false,
+          },
+          required: false
+        },
+      ],
     });
     return tents;
   }
@@ -45,17 +53,11 @@ export class TentsService {
     return `Tent ${id} not Found`;
   }
 
-  async updateTrue(id: string) {
+  async updateAvailable(id: string, isAvailable: boolean) {
     const update = await this.modelTent.findByPk(id);
-    update.set({ isAvailable: true });
+    update.set({ isAvailable: isAvailable });
     update.save();
     return update;
   }
 
-  async updateFalse(id: string) {
-    const update = await this.modelTent.findByPk(id);
-    update.set({ isAvailable: false });
-    update.save();
-    return update;
-  }
 }

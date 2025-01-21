@@ -19,6 +19,8 @@ import { Umbrella } from './database/models/umbrella.model';
 import { User } from './database/models/user.model';
 import { UsersModule } from './users/users.module';
 
+// require('dotenv').config();
+
 @Module({
   imports: [
     SequelizeModule.forRoot({

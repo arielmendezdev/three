@@ -19,6 +19,10 @@ export class CreateTentDto {
   @IsOptional()
   isDeleted: boolean;
 
+  @IsBoolean()
+  @IsOptional()
+  isAvailable: boolean;
+
   @IsUUID()
   @IsOptional()
   userId: string;
