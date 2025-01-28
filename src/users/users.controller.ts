@@ -48,4 +48,13 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
+
+  @Patch('removetent/:id')
+  removeTent(@Param('id') id: string, updateUserDto: UpdateUserDto) {
+    return this.usersService.removeTent(id, updateUserDto);
+  }
+  @Patch('removeumbrella/:id')
+  removeUmbrella(@Param('id') id: string, updateUserDto: UpdateUserDto) {
+    return this.usersService.removeUmbrella(id, updateUserDto);
+  }
 }
