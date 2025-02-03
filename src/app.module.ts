@@ -18,8 +18,10 @@ import { UmbrellasModule } from './umbrellas/umbrellas.module';
 import { Umbrella } from './database/models/umbrella.model';
 import { User } from './database/models/user.model';
 import { UsersModule } from './users/users.module';
+import { Contact } from './database/models/contact.model';
+import { ContactsModule } from './contacts/contacts.module';
 
-// require('dotenv').config();
+require('dotenv').config();
 
 @Module({
   imports: [
@@ -30,23 +32,25 @@ import { UsersModule } from './users/users.module';
       database: process.env.PGDATABASE || process.env.DB_DATABASE,
       password: process.env.PGPASSWORD || process.env.DB_PASSWORD,
       port: parseInt(process.env.DB_PORT),
-      dialectModule: pg,
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
-      },
-      models: [User, Address, Company, Owner, Employed, Tent, Umbrella],
+      // dialectModule: pg,
+      // dialectOptions: {
+      //   ssl: {
+      //     require: true,
+      //     rejectUnauthorized: false,
+      //   },
+      // },
+      models: [User, Address, Company, Owner, Employed, Tent, Umbrella, Contact],
     }),
-    SequelizeModule.forFeature([User, Address, Company, Owner, Employed, Tent, Umbrella]),
+    SequelizeModule.forFeature([User, Address, Company, Owner, Employed, Tent, Umbrella, Contact]),
+    ContactsModule,
     UsersModule,
     AddressesModule,
     CompaniesModule,
     OwnersModule,
     EmployeesModule,
     TentsModule,
-    UmbrellasModule
+    UmbrellasModule,
+    ContactsModule
   ],
   exports: [SequelizeModule],
   controllers: [AppController],
